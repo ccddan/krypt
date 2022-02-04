@@ -1,5 +1,15 @@
 {
   "css.customData": [".vscode/css_custom_data.json"],
   "files.associations": { "*.scss": "postcss" },
-  "cSpell.words": ["browserslist", "krypt", "tailwindcss", "vite", "vitejs"]
+  "cSpell.words": [
+    "browserslist",
+    "krypt",
+    "nomiclabs",
+    "solhint",
+    "tailwindcss",
+    "typechain",
+    "vite",
+    "vitejs"
+  ],
+  "editor.formatOnSave": true
 }
