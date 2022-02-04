@@ -10,7 +10,8 @@
     "tailwindcss",
     "typechain",
     "vite",
-    "vitejs"
+    "vitejs",
+    "glassmorphism"
   ],
   "editor.formatOnSave": true,
   "solidity.remappings": [
