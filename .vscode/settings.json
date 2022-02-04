@@ -11,5 +11,8 @@
     "vite",
     "vitejs"
   ],
-  "editor.formatOnSave": true
+  "editor.formatOnSave": true,
+  "solidity.remappings": [
+    "hardhat=./smart-contracts/node_modules/hardhat",
+  ],
 }
