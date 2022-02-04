@@ -7,6 +7,8 @@
     "krypt",
     "nomiclabs",
     "solhint",
+    "Krypto",
+    "semibold",
     "tailwindcss",
     "typechain",
     "vite",
