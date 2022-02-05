@@ -17,6 +17,7 @@
     "hhat:clean": "hardhat clean",
     "hhat:coverage": "hardhat coverage",
     "hhat:run": "hardhat run scripts/deploy.ts",
+    "hhat:verify": "hardhat verify",
     "hhat": "hardhat"
   },
   "author": "",
