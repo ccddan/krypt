@@ -1,11 +1,13 @@
 import React, {
   ChangeEvent,
   MouseEvent,
+  useContext,
 } from "react";
 
 import { BsInfoCircle } from "react-icons/bs";
 import { SiEthereum } from "react-icons/si";
 
+import { TransactionContext } from "../context/TransactionContext";
 import { Loader } from "./Loader";
 
 const commonStyles =
@@ -34,15 +36,29 @@ const FormInput = (props: FormInputProps) => (
 );
 
 export const Welcome = () => {
-  let isLoading = false;
+  const {
+    currentAccount,
+    connectWallet,
+    sendTransactionPayload,
+    handleSendTransactionPayloadChange,
+    sendTransaction,
+    isLoading,
+  } = useContext(TransactionContext);
 
-  const connectWalletHandler = (event: MouseEvent<HTMLButtonElement>) => {
+  const connectWalletHandler = async (event: MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     event.stopPropagation();
     console.debug("Connect Wallet Handler");
+    await connectWallet();
   };
   const handleSubmit = (event: MouseEvent<HTMLButtonElement>) => {
-    //
+    event.preventDefault();
+    event.stopPropagation();
+
+    console.log("transaction payload:", sendTransactionPayload);
+    let { addressTo, amount, message, keyword } = sendTransactionPayload;
+    if (!addressTo || !amount || !message || !keyword) return;
+    sendTransaction();
   };
 
   return (
@@ -57,13 +73,15 @@ export const Welcome = () => {
             Explore the crypto world. Buy and sell crypto currencies easily with
             Krypto.
           </p>
-          <button
-            type="button"
-            className="flex flex-row justify-center items-center my-5 bg-[#2953e3] p-3 rounded-full cursor-pointer hover:bg-[#2546db] font-semibold"
-            onClick={connectWalletHandler}
-          >
-            Connect Wallet
-          </button>
+          {!currentAccount && (
+            <button
+              type="button"
+              className="flex flex-row justify-center items-center my-5 bg-[#2953e3] p-3 rounded-full cursor-pointer hover:bg-[#2546db] font-semibold"
+              onClick={connectWalletHandler}
+            >
+              Connect Wallet
+            </button>
+          )}
 
           <div className="grid sm:grid-cols-3 grid-cols-2 w-full mt-10">
             <div className={`rounded-tl-2xl ${commonStyles}`}>Reliability</div>
@@ -89,12 +107,16 @@ export const Welcome = () => {
                 />
               </div>
               <div>
-                <p className="text-white font-light text-sm">
-                  Address: <b>0x000000000000000000000</b>
+                <p className="text-white font-light text-sm w-full text-ellipsis truncate">
+                  Address:
+                  <br />
+                  <b>
+                    {currentAccount
+                      ? currentAccount
+                      : "0x000000000000000000000"}
+                  </b>
                 </p>
-                <p className="text-white font-semibold text-lg mt-1 italic">
-                  Ethereum
-                </p>
+                <p className="text-white text-lg mt-1 italic">Eth: 12.5</p>
               </div>
             </div>
           </div>
@@ -104,25 +126,25 @@ export const Welcome = () => {
               name="addressTo"
               placeholder="Address To"
               type="text"
-              onChangeHandler={(e: any, n: string) => console.log("h")}
+              onChangeHandler={handleSendTransactionPayloadChange}
             />
             <FormInput
               name="amount"
               placeholder="Amount (ETH)"
               type="number"
-              onChangeHandler={(e: any, n: string) => console.log("h")}
+              onChangeHandler={handleSendTransactionPayloadChange}
             />
             <FormInput
               name="keyword"
               placeholder="Keyword (Gif)"
               type="text"
-              onChangeHandler={(e: any, n: string) => console.log("h")}
+              onChangeHandler={handleSendTransactionPayloadChange}
             />
             <FormInput
               name="message"
               placeholder="Message"
               type="text"
-              onChangeHandler={(e: any, n: string) => console.log("h")}
+              onChangeHandler={handleSendTransactionPayloadChange}
             />
 
             <div className="h-[1px] w-full bg-gray-400 my-2" />

@@ -3,17 +3,18 @@
   "files.associations": { "*.scss": "postcss" },
   "cSpell.words": [
     "browserslist",
+    "ethersproject",
+    "glassmorphism",
     "hhat",
     "krypt",
-    "nomiclabs",
-    "solhint",
     "Krypto",
+    "nomiclabs",
     "semibold",
+    "solhint",
     "tailwindcss",
     "typechain",
     "vite",
-    "vitejs",
-    "glassmorphism"
+    "vitejs"
   ],
   "editor.formatOnSave": true,
   "solidity.remappings": [
