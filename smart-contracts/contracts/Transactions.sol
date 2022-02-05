@@ -28,18 +28,12 @@ contract Transactions {
 
   function addToTransactions(
     address payable to,
+    uint256 amount,
     string memory message,
     string memory keyword
   ) public payable {
     transactions.push(
-      TransferStruct(
-        msg.sender,
-        to,
-        msg.value,
-        message,
-        block.timestamp,
-        keyword
-      )
+      TransferStruct(msg.sender, to, amount, message, block.timestamp, keyword)
     );
     transactionsCounter += 1;
 
