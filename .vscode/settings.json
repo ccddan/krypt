@@ -3,6 +3,7 @@
   "files.associations": { "*.scss": "postcss" },
   "cSpell.words": [
     "browserslist",
+    "hhat",
     "krypt",
     "nomiclabs",
     "solhint",
@@ -15,4 +16,6 @@
   "solidity.remappings": [
     "hardhat=./smart-contracts/node_modules/hardhat",
   ],
+  // "solidity.packageDefaultDependenciesContractsDirectory": "./smart-contracts/",
+  // "solidity.packageDefaultDependenciesDirectory": "./smart-contracts/node_modules",
 }
