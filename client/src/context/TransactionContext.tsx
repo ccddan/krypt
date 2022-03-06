@@ -13,6 +13,7 @@ const transactionsContract = config.blockchain.contract.transactions;
 
 type TransactionContextProps = {
   currentAccount: any;
+  accountBalance: string;
   isLoading: boolean;
   transactionsCount: number;
   sendTransactionPayload: {
@@ -27,9 +28,11 @@ type TransactionContextProps = {
     inputName: string
   ) => void;
   sendTransaction: () => Promise<boolean>;
+  getAccountBalance: (account: string) => Promise<void>;
 };
 const TransactionContextPropsInitialValue: TransactionContextProps = {
   currentAccount: undefined,
+  accountBalance: "0.000",
   isLoading: false,
   transactionsCount: 0,
   sendTransactionPayload: {
@@ -50,6 +53,7 @@ const TransactionContextPropsInitialValue: TransactionContextProps = {
   sendTransaction: async () => {
     return false;
   },
+  getAccountBalance: async (account: string) => {},
 };
 
 const ethereum = window.ethereum;
@@ -85,6 +89,7 @@ export const TransactionProvider = (props: TransactionProviderProps) => {
   let [transactionsCount, setTransactionsCount] = useState(
     +(localStorage.getItem("transactionsCount") || 0)
   );
+  let [accountBalance, setAccountBalance] = useState("0.000");
 
   const handleSendTransactionPayloadChange = (
     event: ChangeEvent<HTMLInputElement>,
@@ -95,19 +100,39 @@ export const TransactionProvider = (props: TransactionProviderProps) => {
       [inputName]: event.target.value,
     }));
 
+  const getAccountBalance = async (account: string) => {
+    let value: string;
+    console.log("Get balance for account:", account);
+    try {
+      const provider = new ethers.providers.Web3Provider(ethereum);
+      const balance = await provider.getBalance(account);
+      value = ethers.utils.formatEther(balance);
+      setAccountBalance(value);
+      console.log("Account balance:", value);
+    } catch (error) {
+      console.error("Cannot get balance:", error);
+    }
+  };
+
   const isWalletConnected = async () => {
     try {
       if (!ethereum) throw new Error("MetaMask wallet is not installed");
 
+      console.log("Fetching MetaMask connected accounts...");
       const accounts = await ethereum.request({ method: "eth_accounts" });
-      console.log("accounts:", accounts);
+      console.log("Connected accounts:", accounts);
 
       if (accounts.length) {
-        setCurrentAccount(accounts[0]);
+        let idxAcc = 0;
+        let account = accounts[idxAcc];
+
+        console.log("Set main account:", account);
+        setCurrentAccount(account);
+        await getAccountBalance(account);
 
         // getAllTransactions();
       } else {
-        console.warn("No accounts found in connected wallet");
+        console.warn("No accounts connected");
       }
     } catch (error) {
       console.error("accounts in connected wallet:", error);
@@ -118,11 +143,22 @@ export const TransactionProvider = (props: TransactionProviderProps) => {
   const connectWallet = async () => {
     if (!ethereum) throw new Error("MetaMask wallet is not installed");
     try {
+      console.log("Connecting MetaMask account(s)...");
       const accounts = await ethereum.request({
         method: "eth_requestAccounts",
       });
+      console.log("Connected MetaMask accounts:", accounts);
 
-      setCurrentAccount(accounts[0]);
+      if (accounts.length) {
+        let idxAcc = 0;
+        let account = accounts[idxAcc];
+        console.log("Set main account:", account);
+
+        setCurrentAccount(account);
+        await getAccountBalance(account);
+      } else {
+        console.warn("No accounts were connected, connect again");
+      }
     } catch (error) {
       console.error("connect to wallet account:", error);
       throw new Error("Connect to wallet account operation failed");
@@ -156,11 +192,11 @@ export const TransactionProvider = (props: TransactionProviderProps) => {
         message,
         keyword
       );
-      console.debug("Loading -", tx.hash);
+      console.log("Loading - tx hash:", tx.hash);
 
       tx.wait();
       setIsLoading(false);
-      console.log("Success -", tx.hash);
+      console.log("Success - tx hash:", tx.hash);
 
       let transactionsCount = await contract.getTransactionsCount();
       setTransactionsCount(transactionsCount.toNumber());
@@ -168,6 +204,8 @@ export const TransactionProvider = (props: TransactionProviderProps) => {
         "transactionsCount",
         `${transactionsCount.toNumber()}`
       );
+
+      await getAccountBalance(currentAccount);
     } catch (error) {
       console.error("send transaction:", error);
       setIsLoading(false);
@@ -185,12 +223,14 @@ export const TransactionProvider = (props: TransactionProviderProps) => {
     <TransactionContext.Provider
       value={{
         currentAccount,
+        accountBalance,
         isLoading,
         transactionsCount,
         connectWallet,
         sendTransactionPayload,
         handleSendTransactionPayloadChange,
         sendTransaction,
+        getAccountBalance,
       }}
     >
       {props.children}

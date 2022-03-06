@@ -38,6 +38,7 @@ const FormInput = (props: FormInputProps) => (
 export const Welcome = () => {
   const {
     currentAccount,
+    accountBalance,
     connectWallet,
     sendTransactionPayload,
     handleSendTransactionPayloadChange,
@@ -116,7 +117,9 @@ export const Welcome = () => {
                       : "0x000000000000000000000"}
                   </b>
                 </p>
-                <p className="text-white text-lg mt-1 italic">Eth: 12.5</p>
+                <p className="text-white text-lg mt-1 italic">
+                  Eth: {accountBalance}
+                </p>
               </div>
             </div>
           </div>
