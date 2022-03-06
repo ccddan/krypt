@@ -3,9 +3,13 @@
   "files.associations": { "*.scss": "postcss" },
   "cSpell.words": [
     "browserslist",
+    "ethersproject",
+    "glassmorphism",
     "hhat",
     "krypt",
+    "Krypto",
     "nomiclabs",
+    "semibold",
     "solhint",
     "tailwindcss",
     "typechain",

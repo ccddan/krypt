@@ -1,4 +1,5 @@
-const transactionsInfo = require("./abis/Transactions.json");
+import transactionsInfo from "./abis/Transactions.json";
+import transactionsAddr from "./abis/Transactions_addr.json";
 
 export const config = {
   blockchain: {
@@ -6,7 +7,7 @@ export const config = {
       transactions: {
         name: transactionsInfo.contractName,
         abi: transactionsInfo.abi,
-        addr: process.env.CONTRACT_TRANSACTIONS_ADDR,
+        addr: transactionsAddr.addr,
       },
     },
   },
