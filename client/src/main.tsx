@@ -4,7 +4,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 
 import App from "./App";
-import { TransactionProvider } from "./context/TransactionContext";
+import { TransactionProvider } from "./components/Transactions";
 
 ReactDOM.render(
   <TransactionProvider>

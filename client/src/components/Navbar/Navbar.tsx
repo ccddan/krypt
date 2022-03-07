@@ -3,7 +3,7 @@ import { useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 import { HiMenuAlt4 } from "react-icons/hi";
 
-import logo from "../../images/logo.png";
+import logo from "../../../images/logo.png";
 
 interface NavbarItemProps {
   title: string;
