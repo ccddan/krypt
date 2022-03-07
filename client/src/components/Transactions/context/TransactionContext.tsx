@@ -7,7 +7,7 @@ import React, {
 
 import { ethers } from "ethers";
 
-import config from "../config";
+import config from "../../../config";
 
 const transactionsContract = config.blockchain.contract.transactions;
 

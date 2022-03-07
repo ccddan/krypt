@@ -1,6 +1,6 @@
 import { useContext } from "react";
 
-import { TransactionContext } from "../context/TransactionContext";
+import { TransactionContext } from "./context/TransactionContext";
 
 const data = [
   {
