@@ -13,7 +13,7 @@ export const NAV_MENU_ITEMS = Object.freeze([
   "Wallet",
 ]);
 
-const getNavbarItems = (classProps: string = "cursor-pointer") => {
+const getNavbarItems = (classProps: string) => {
   return NAV_MENU_ITEMS.map((label: string, idx: number) => (
     <NavbarItem key={`${label}${idx}`} title={label} classProps={classProps} />
   ));
