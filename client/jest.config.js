@@ -15,6 +15,11 @@ module.exports = {
   // The bail config option can be used here to have Jest stop running tests after
   // the first failure.
   bail: false,
+  globals: {
+    "ts-jest": {
+      isolatedModules: true,
+    },
+  },
   // Indicates whether each individual test should be reported during the run.
   verbose: false,
   // Indicates whether the coverage information should be collected while executing the test
