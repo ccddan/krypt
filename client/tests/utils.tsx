@@ -1,12 +1,13 @@
 import React, {
   FC,
   ReactElement,
-} from 'react';
+} from "react";
 
 import {
   render,
   RenderOptions,
-} from '@testing-library/react';
+  screen,
+} from "@testing-library/react";
 
 const AllTheProviders: FC = ({children}) => {
   return (
@@ -22,4 +23,4 @@ const customRender = (
 ) => render(ui, {wrapper: AllTheProviders, ...options})
 
 export * from '@testing-library/react'
-export { customRender as render };
+export { customRender as render, screen };
