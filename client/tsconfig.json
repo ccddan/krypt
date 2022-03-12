@@ -17,7 +17,15 @@
     "jsx": "react-jsx",
     "baseUrl": "./",
     "paths": {
-      "@project/tests/*": ["./tests/*"]
+      "@project/config": [
+        "./src/config/index.ts"
+      ],
+      "@project/config/*": [
+        "./src/config/*"
+      ],
+      "@project/tests/*": [
+        "./tests/*"
+      ]
     }
   },
   "include": ["./src/**/*", "./tests/**/*"]
