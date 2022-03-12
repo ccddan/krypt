@@ -4,6 +4,7 @@ import { AiOutlineClose } from "react-icons/ai";
 import { HiMenuAlt4 } from "react-icons/hi";
 
 import logo from "../../../images/logo.png";
+import NavbarItem from "./NavbarItem";
 
 export const NAV_MENU_ITEMS = Object.freeze([
   "Market",
@@ -11,18 +12,6 @@ export const NAV_MENU_ITEMS = Object.freeze([
   "Tutorials",
   "Wallet",
 ]);
-
-interface NavbarItemProps {
-  title: string;
-  classProps: string;
-}
-const NavbarItem = (props: NavbarItemProps) => {
-  return (
-    <li className={`mx-4 cursor-pointer ${props.classProps} navbar-menu-item`}>
-      {props.title}
-    </li>
-  );
-};
 
 const getNavbarItems = (classProps: string = "cursor-pointer") => {
   return NAV_MENU_ITEMS.map((label: string, idx: number) => (
