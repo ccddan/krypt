@@ -5,6 +5,8 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
+    "test:dev": "jest --watch --coverage",
+    "test:dev:all": "jest --watchAll --coverage",
     "test": "jest --coverage"
   },
   "dependencies": {
