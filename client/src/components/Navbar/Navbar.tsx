@@ -4,27 +4,19 @@ import { AiOutlineClose } from "react-icons/ai";
 import { HiMenuAlt4 } from "react-icons/hi";
 
 import logo from "../../../images/logo.png";
+import NavbarItem from "./NavbarItem";
 
-interface NavbarItemProps {
-  title: string;
-  classProps: string;
-}
-const NavbarItem = (props: NavbarItemProps) => {
-  return (
-    <li className={`mx-4 cursor-pointer ${props.classProps}`}>{props.title}</li>
-  );
-};
+export const NAV_MENU_ITEMS = Object.freeze([
+  "Market",
+  "Exchange",
+  "Tutorials",
+  "Wallet",
+]);
 
-const getNavbarItems = (classProps: string = "cursor-pointer") => {
-  return ["Market", "Exchange", "Tutorials", "Wallet"].map(
-    (label: string, idx: number) => (
-      <NavbarItem
-        key={`${label}${idx}`}
-        title={label}
-        classProps={classProps}
-      />
-    )
-  );
+const getNavbarItems = (classProps: string) => {
+  return NAV_MENU_ITEMS.map((label: string, idx: number) => (
+    <NavbarItem key={`${label}${idx}`} title={label} classProps={classProps} />
+  ));
 };
 
 export const Navbar = () => {
@@ -33,7 +25,7 @@ export const Navbar = () => {
   return (
     <nav className="w-full flex md:justify-center justify-between items-center p-4">
       <div className="md:flex-[0.5] flex-initial justify-center items-center">
-        <img src={logo} alt="lgo" className="w-32 cursor-pointer" />
+        <img src={logo} alt="logo" className="w-32 cursor-pointer" />
       </div>
       <ul className="text-white md:flex hidden list-none flex-row justify-between items-center flex-initial">
         {getNavbarItems("cursor-pointer hover:text-[#DEDEDE]")}
@@ -46,6 +38,7 @@ export const Navbar = () => {
           <span
             className="text-white md:hidden cursor-pointer"
             onClick={() => setToggleMenu(false)}
+            data-testid="hide-menu-for-small-screen"
           >
             <AiOutlineClose size={28} />
           </span>
@@ -53,14 +46,21 @@ export const Navbar = () => {
           <span
             className="text-white md:hidden cursor-pointer"
             onClick={() => setToggleMenu(true)}
+            data-testid="open-menu-for-small-screen"
           >
             <HiMenuAlt4 size={28} />
           </span>
         )}
         {toggleMenu && (
-          <ul className="z-index-10 fixed top-0 -right-2 p-3 w-[70vw] h-screen shadow-2xl md:hidden list-none flex flex-col justify-start items-center rounded-md blue-glassmorphism text-white animate-slide-in">
+          <ul
+            className="z-index-10 fixed top-0 -right-2 p-3 w-[70vw] h-screen shadow-2xl md:hidden list-none flex flex-col justify-start items-center rounded-md blue-glassmorphism text-white animate-slide-in"
+            data-testid="menu-list-for-small-screens"
+          >
             <li className="text-xl w-full my-2 cursor-pointer">
-              <span onClick={() => setToggleMenu(false)}>
+              <span
+                onClick={() => setToggleMenu(false)}
+                data-testid="hide-menu-for-small-screen-2"
+              >
                 <AiOutlineClose size={28} />
               </span>
             </li>

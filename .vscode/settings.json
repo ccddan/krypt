@@ -12,6 +12,7 @@
     "semibold",
     "solhint",
     "tailwindcss",
+    "testid",
     "typechain",
     "vite",
     "vitejs"
