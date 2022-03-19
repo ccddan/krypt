@@ -31,7 +31,7 @@ export const CryptoCard = (props: CryptoCardProps) => {
             </b>
           </p>
           <p className="text-white text-lg mt-1 italic">
-            Eth: {props.balance}
+            Eth: <span>{props.balance ? props.balance : "N/A"}</span>
           </p>
         </div>
       </div>
