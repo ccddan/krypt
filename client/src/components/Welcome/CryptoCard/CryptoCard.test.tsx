@@ -6,7 +6,7 @@ import { getByText } from "@testing-library/dom";
 import CryptoCard, { CryptoCardProps } from "./CryptoCard";
 
 describe("renders content", () => {
-  test("card is render with default values", () => {
+  test("card with default values", () => {
     let props: CryptoCardProps = {
       account: "",
       balance: "",
@@ -17,7 +17,7 @@ describe("renders content", () => {
     expect(getByText(container, "N/A")).toBeInTheDocument();
   });
 
-  test("card is render with non-default values", () => {
+  test("card with non-default values", () => {
     let props: CryptoCardProps = {
       account: "0x123456789",
       balance: "1234.56789",

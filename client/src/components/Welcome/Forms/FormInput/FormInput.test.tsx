@@ -4,8 +4,8 @@ import { fireEvent} from "@testing-library/react";
 import { render, screen } from "@project/tests/utils";
 import FormInput, { FormInputProps } from "./FormInput";
 
-describe("renders content", () => {
-  test("card is render with default values", () => {
+describe("form input component", () => {
+  test("dynamic attrs values and onchange handler", () => {
     let onChangeHandlerFn = jest.fn();
 
     let props: FormInputProps = {
