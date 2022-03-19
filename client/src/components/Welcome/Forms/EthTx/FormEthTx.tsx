@@ -23,7 +23,7 @@ export const FormEthTx = (props: FormEthTxProps) => {
 
   return (
     <div className="p-5 sm:w-96 w-full flex flex-col justify-start items-center blue-glassmorphism">
-      {props.inputs.map((inputProps: FormInputProps) => <FormInput {...inputProps}/>)}
+      {props.inputs.map((inputProps: FormInputProps, idx: number) => <FormInput key={idx} {...inputProps}/>)}
 
       <div className="h-[1px] w-full bg-gray-400 my-2" />
       {isLoading ? (
