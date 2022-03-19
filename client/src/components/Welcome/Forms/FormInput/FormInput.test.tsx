@@ -15,7 +15,7 @@ describe("renders content", () => {
       onChangeHandler: onChangeHandlerFn,
     };
 
-    const { container } = render(<FormInput {...props}/>);
+    render(<FormInput {...props}/>);
     let input = screen.getByRole("textbox");
 
     expect(input.getAttribute("name")).toEqual(props.name);
