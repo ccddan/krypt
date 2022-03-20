@@ -10,6 +10,8 @@ export default defineConfig({
     alias: {
       '@project/config': path.resolve(__dirname, '.', 'src', 'config', 'index.ts'),
       '@project/config/*': path.resolve(__dirname, '.', 'src', 'config', '*'),
+      '@project/blockchain': path.resolve(__dirname, '.', 'src', 'blockchain', 'index.ts'),
+      '@project/blockchain/*': path.resolve(__dirname, '.', 'src', 'blockchain', '*'),
     },
   }
 });

@@ -7,11 +7,9 @@ import React, {
 
 import { ethers } from "ethers";
 
-import config from "@project/config";
+import { ethereum, getContract } from "@project/blockchain";
 
-const transactionsContract = config.blockchain.contract.transactions;
-
-type TransactionContextProps = {
+export type TransactionContextProps = {
   currentAccount: any;
   accountBalance: string;
   isLoading: boolean;
@@ -56,25 +54,11 @@ const TransactionContextPropsInitialValue: TransactionContextProps = {
   getAccountBalance: async (account: string) => {},
 };
 
-const ethereum = window.ethereum;
-
 export const TransactionContext = React.createContext(
   TransactionContextPropsInitialValue
 );
 
-const getEthContract = (): ethers.Contract => {
-  const provider = new ethers.providers.Web3Provider(ethereum);
-  const signer = provider.getSigner();
-  const transactionContract = new ethers.Contract(
-    transactionsContract.addr,
-    transactionsContract.abi,
-    signer
-  );
-
-  return transactionContract;
-};
-
-type TransactionProviderProps = {
+export type TransactionProviderProps = {
   children: ReactNode;
 };
 export const TransactionProvider = (props: TransactionProviderProps) => {
@@ -173,7 +157,7 @@ export const TransactionProvider = (props: TransactionProviderProps) => {
       let { addressTo, amount, message, keyword } = sendTransactionPayload;
       const parsedAmount = ethers.utils.parseEther(amount)._hex;
 
-      const contract = getEthContract();
+      const contract = getContract();
       await ethereum.request({
         method: "eth_sendTransaction",
         contract,
