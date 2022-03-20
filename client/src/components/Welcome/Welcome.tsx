@@ -122,7 +122,7 @@ export const Welcome = () => {
         </div>
 
         <div className="flex flex-col flex-1 items-center justify-start w-full mf:mt-0 mt-10">
-          <CryptoCard account={accountBalance} balance={accountBalance} />
+          <CryptoCard account={currentAccount} balance={accountBalance} />
 
           <FormEthTx  {...formProps}/>
         </div>
