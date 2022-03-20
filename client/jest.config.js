@@ -5,11 +5,12 @@ module.exports = {
   moduleDirectories: ["node_modules", "./tests"],
   moduleNameMapper: {
     "\\.(jpg|ico|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$":
-      "<rootDir>/tests/__mocks__/file.mock.ts",
+    "<rootDir>/tests/__mocks__/file.mock.ts",
     "\\.(css|less)$": "<rootDir>/tests/__mocks__/file.mock.ts",
     "(.*)abis/Transactions.json": "<rootDir>/tests/__mocks__/Transactions.json.mock.ts",
     "(.*)abis/Transactions_addr.json": "<rootDir>/tests/__mocks__/Transactions_addr.json.mock.ts",
     "@project/tests/(.*)": "<rootDir>/tests/$1",
+    "@project/config": "<rootDir>/src/config/index.ts",
   },
   // The bail config option can be used here to have Jest stop running tests after
   // the first failure.
