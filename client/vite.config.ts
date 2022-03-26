@@ -12,6 +12,8 @@ export default defineConfig({
       '@project/config/*': path.resolve(__dirname, '.', 'src', 'config', '*'),
       '@project/blockchain': path.resolve(__dirname, '.', 'src', 'blockchain', 'index.ts'),
       '@project/blockchain/*': path.resolve(__dirname, '.', 'src', 'blockchain', '*'),
+      '@project/context': path.resolve(__dirname, '.', 'src', 'context', 'index.tsx'),
+      '@project/context/*': path.resolve(__dirname, '.', 'src', 'context', '*'),
     },
   }
 });

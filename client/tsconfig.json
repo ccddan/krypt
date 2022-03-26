@@ -33,6 +33,12 @@
       "@project/blockchain/*": [
         "./src/blockchain/*"
       ],
+      "@project/context": [
+        "./src/context/index.tsx"
+      ],
+      "@project/context/*": [
+        "./src/context/*"
+      ],
       "@project/tests/*": [
         "./tests/*"
       ]

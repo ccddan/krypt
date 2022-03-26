@@ -1,8 +1,8 @@
-import { MouseEvent } from "react";
-
-import { useTransaction, SendTransactionPayload } from "../Transactions";
-import { CryptoCard } from "./CryptoCard";
 import { FormEthTx, FormEthTxProps } from "./Forms";
+import { SendTransactionPayload, useTransaction } from "@project/context";
+
+import { CryptoCard } from "./CryptoCard";
+import { MouseEvent } from "react";
 
 const commonStyles =
   "min-h-[70px] sm:px-0 px-2 sm:min-w-[120px] flex justify-center items-center border-[0.5px] border-gray-400 text-sm font-light text-white";

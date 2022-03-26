@@ -1,13 +1,12 @@
-import { useState } from "react";
 import "@testing-library/jest-dom";
-import { cleanup, fireEvent } from "@testing-library/react";
 
-import { render, screen } from "@project/tests/utils";
 import FormEthTx, { FormEthTxProps } from "./FormEthTx";
 import {
   TransactionContext,
   TransactionContextPropsInitialValue,
-} from "../../../../context/TransactionContext";
+} from "@project/context";
+import { cleanup, fireEvent } from "@testing-library/react";
+import { render, screen } from "@project/tests/utils";
 
 let onChangeHandlerFn = jest.fn();
 let onSubmitHandlerFn = jest.fn();

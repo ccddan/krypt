@@ -1,8 +1,8 @@
-import { MouseEvent } from "react";
+import { FormInput, FormInputProps } from "../FormInput";
 
 import { Loader } from "../../../Loader";
-import { useTransaction } from "../../../Transactions";
-import { FormInput, FormInputProps } from "../FormInput";
+import { MouseEvent } from "react";
+import { useTransaction } from "@project/context";
 
 export interface FormEthTxProps {
   inputs: FormInputProps[];

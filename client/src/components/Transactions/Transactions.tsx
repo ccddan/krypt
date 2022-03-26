@@ -1,5 +1,5 @@
-import { useTransaction } from "../../context/TransactionContext";
 import TransactionCard from "./TransactionCard/TransactionCard";
+import { useTransaction } from "@project/context";
 
 const data = [
   {

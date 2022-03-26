@@ -1,13 +1,13 @@
-import { useState } from "react";
 import "@testing-library/jest-dom";
-import { cleanup, fireEvent } from "@testing-library/react";
 
-import { render, screen } from "@project/tests/utils";
-import Welcome, { createOnFormSubmitHandlerFn } from "./Welcome";
 import {
   TransactionContext,
   TransactionContextPropsInitialValue,
-} from "../../context/TransactionContext";
+} from "@project/context";
+import Welcome, { createOnFormSubmitHandlerFn } from "./Welcome";
+import { render, screen } from "@project/tests/utils";
+
+import { fireEvent } from "@testing-library/react";
 
 let connectWalletFn = jest.fn();
 let sendTransactionFn = jest.fn();
