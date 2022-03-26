@@ -11,6 +11,8 @@ module.exports = {
     "(.*)abis/Transactions_addr.json": "<rootDir>/tests/__mocks__/Transactions_addr.json.mock.ts",
     "@project/tests/(.*)": "<rootDir>/tests/$1",
     "@project/config": "<rootDir>/src/config/index.ts",
+    "@project/blockchain": "<rootDir>/src/blockchain/index.ts",
+    "@project/blockchain/(.*)": "<rootDir>/src/blockchain/$1",
   },
   // The bail config option can be used here to have Jest stop running tests after
   // the first failure.
