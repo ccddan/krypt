@@ -18,9 +18,10 @@ jest.mock("ethers", () => {
   };
 })
 
-import {ethers} from "ethers";
+import { ethereum, ethersGetContract, ethersWeb3ProviderFactory, getContract } from "./helpers";
+
 import config from "@project/config";
-import { ethereum, ethersWeb3ProviderFactory, ethersGetContract, getContract } from "./helpers";
+import {ethers} from "ethers";
 
 describe("ethersWeb3ProviderFactory", () => {
   afterAll(() => {

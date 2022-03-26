@@ -4,7 +4,7 @@ import { SiEthereum } from "react-icons/si";
 export interface CryptoCardProps {
   account: string;
   balance: string;
-};
+}
 
 export const CryptoCard = (props: CryptoCardProps) => {
   return (
@@ -14,21 +14,13 @@ export const CryptoCard = (props: CryptoCardProps) => {
           <div className="w-10 h-10 rounded-full border-2 border-white flex justify-center items-center">
             <SiEthereum size={20} color="#fff" />
           </div>
-          <BsInfoCircle
-            color="#fff"
-            size={20}
-            style={{ cursor: "pointer" }}
-          />
+          <BsInfoCircle color="#fff" size={20} style={{ cursor: "pointer" }} />
         </div>
         <div>
           <p className="text-white font-light text-sm w-full text-ellipsis truncate">
             Address:
             <br />
-            <b>
-              {props.account
-                ? props.account
-                : "0x000000000000000000000"}
-            </b>
+            <b>{props.account ? props.account : "0x000000000000000000000"}</b>
           </p>
           <p className="text-white text-lg mt-1 italic">
             Eth: <span>{props.balance ? props.balance : "N/A"}</span>

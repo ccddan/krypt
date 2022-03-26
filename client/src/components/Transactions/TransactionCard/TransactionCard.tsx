@@ -35,9 +35,7 @@ export const TransactionCard = (props: TransactionCardProps) => {
           </a>
           <p className="text-base">Amount: {props.amount} ETH</p>
           <br />
-          <p className="text-base">
-            Message: {props.message}
-          </p>
+          <p className="text-base">Message: {props.message}</p>
         </div>
         <div className="bg-black p-3 px-5 w-max rounded-3xl -mt-5 shadow-2xl">
           <p className="text-[#37c7da]">{props.timestamp}</p>

@@ -1,6 +1,5 @@
-import { ethers } from "ethers";
-
 import config from "@project/config";
+import { ethers } from "ethers";
 
 export const ethereum = window.ethereum;
 

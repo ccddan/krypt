@@ -1,15 +1,14 @@
 import {
   ChangeEvent,
   ReactNode,
+  createContext,
+  useContext,
   useEffect,
   useState,
-  useContext,
-  createContext,
 } from "react";
+import { ethereum, getContract } from "@project/blockchain";
 
 import { ethers } from "ethers";
-
-import { ethereum, getContract } from "@project/blockchain";
 
 export type SendTransactionPayload = {
   addressTo: string;

@@ -1,5 +1,5 @@
-import transactionsInfo from "./abis/Transactions.json";
 import transactionsAddr from "./abis/Transactions_addr.json";
+import transactionsInfo from "./abis/Transactions.json";
 
 export const config = {
   blockchain: {

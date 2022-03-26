@@ -1,12 +1,6 @@
 import "./App.css";
 
-import {
-  Footer,
-  Navbar,
-  Services,
-  Transactions,
-  Welcome,
-} from "./components";
+import { Footer, Navbar, Services, Transactions, Welcome } from "./components";
 
 export const App = () => {
   return (
