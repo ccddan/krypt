@@ -1,8 +1,10 @@
-import React, {
+import {
   ChangeEvent,
   ReactNode,
   useEffect,
   useState,
+  useContext,
+  createContext,
 } from "react";
 
 import { ethers } from "ethers";
@@ -28,7 +30,8 @@ export type TransactionContextProps = {
   sendTransaction: () => Promise<boolean>;
   getAccountBalance: (account: string) => Promise<void>;
 };
-const TransactionContextPropsInitialValue: TransactionContextProps = {
+
+export const TransactionContextPropsInitialValue: TransactionContextProps = {
   currentAccount: undefined,
   accountBalance: "0.000",
   isLoading: false,
@@ -54,9 +57,19 @@ const TransactionContextPropsInitialValue: TransactionContextProps = {
   getAccountBalance: async (account: string) => {},
 };
 
-export const TransactionContext = React.createContext(
+export const TransactionContext = createContext(
   TransactionContextPropsInitialValue
 );
+
+export function useTransaction() {
+  const context = useContext(TransactionContext);
+
+  if (context === undefined) {
+    throw new Error("useTransaction must be used within a TransactionProvider");
+  }
+
+  return context;
+}
 
 export type TransactionProviderProps = {
   children: ReactNode;

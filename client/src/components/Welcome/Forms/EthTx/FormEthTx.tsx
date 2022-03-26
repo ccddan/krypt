@@ -1,29 +1,25 @@
-import React, {
-  MouseEvent,
-  useContext,
-} from "react";
+import { MouseEvent } from "react";
 
 import { Loader } from "../../../Loader";
-import { TransactionContext } from "../../../Transactions";
-import {
-  FormInput,
-  FormInputProps,
-} from "../FormInput";
+import { useTransaction } from "../../../Transactions";
+import { FormInput, FormInputProps } from "../FormInput";
 
 export interface FormEthTxProps {
   inputs: FormInputProps[];
   submit: {
     text: string;
-    handler:(event: MouseEvent<HTMLButtonElement>) => void;
-  }
-};
+    handler: (event: MouseEvent<HTMLButtonElement>) => void;
+  };
+}
 
 export const FormEthTx = (props: FormEthTxProps) => {
-  const { isLoading } = useContext(TransactionContext);
+  const { isLoading } = useTransaction();
 
   return (
     <div className="p-5 sm:w-96 w-full flex flex-col justify-start items-center blue-glassmorphism">
-      {props.inputs.map((inputProps: FormInputProps, idx: number) => <FormInput key={idx} {...inputProps}/>)}
+      {props.inputs.map((inputProps: FormInputProps, idx: number) => (
+        <FormInput key={idx} {...inputProps} />
+      ))}
 
       <div className="h-[1px] w-full bg-gray-400 my-2" />
       {isLoading ? (

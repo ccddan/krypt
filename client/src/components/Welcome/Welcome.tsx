@@ -1,19 +1,11 @@
-import React, {
-  MouseEvent,
-  useContext,
-} from "react";
+import { MouseEvent } from "react";
 
-import { TransactionContext } from "../Transactions";
+import { useTransaction } from "../Transactions";
 import { CryptoCard } from "./CryptoCard";
-import {
-  FormEthTx,
-  FormEthTxProps,
-} from "./Forms";
+import { FormEthTx, FormEthTxProps } from "./Forms";
 
 const commonStyles =
   "min-h-[70px] sm:px-0 px-2 sm:min-w-[120px] flex justify-center items-center border-[0.5px] border-gray-400 text-sm font-light text-white";
-
-
 
 export const Welcome = () => {
   const {
@@ -23,7 +15,7 @@ export const Welcome = () => {
     sendTransactionPayload,
     handleSendTransactionPayloadChange,
     sendTransaction,
-  } = useContext(TransactionContext);
+  } = useTransaction();
 
   const connectWalletHandler = async (event: MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
@@ -86,7 +78,7 @@ export const Welcome = () => {
     submit: {
       text: "Send",
       handler: handleSubmit,
-    }
+    },
   };
 
   return (
@@ -124,7 +116,7 @@ export const Welcome = () => {
         <div className="flex flex-col flex-1 items-center justify-start w-full mf:mt-0 mt-10">
           <CryptoCard account={currentAccount} balance={accountBalance} />
 
-          <FormEthTx  {...formProps}/>
+          <FormEthTx {...formProps} />
         </div>
       </div>
     </div>

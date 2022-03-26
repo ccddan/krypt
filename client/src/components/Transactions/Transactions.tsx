@@ -1,6 +1,4 @@
-import { useContext } from "react";
-
-import { TransactionContext } from "./context/TransactionContext";
+import { useTransaction } from "./context/TransactionContext";
 import TransactionCard from "./TransactionCard/TransactionCard";
 
 const data = [
@@ -61,7 +59,7 @@ const data = [
 ];
 
 export const Transactions = () => {
-  const { currentAccount } = useContext(TransactionContext);
+  const { currentAccount } = useTransaction();
 
   return (
     <div className="flex flex-col w-full justify-center items-center 2xl:px-20 gradient-bg-transactions text-white">

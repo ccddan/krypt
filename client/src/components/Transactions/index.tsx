@@ -1,5 +1,5 @@
 export { Transactions } from "./Transactions";
 export {
-  TransactionContext,
+  useTransaction,
   TransactionProvider,
 } from "./context/TransactionContext";
