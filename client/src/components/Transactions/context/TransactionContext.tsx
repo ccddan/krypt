@@ -11,17 +11,19 @@ import { ethers } from "ethers";
 
 import { ethereum, getContract } from "@project/blockchain";
 
+export type SendTransactionPayload = {
+  addressTo: string;
+  amount: string;
+  message: string;
+  keyword: string;
+};
+
 export type TransactionContextProps = {
   currentAccount: any;
   accountBalance: string;
   isLoading: boolean;
   transactionsCount: number;
-  sendTransactionPayload: {
-    addressTo: string;
-    amount: string;
-    message: string;
-    keyword: string;
-  };
+  sendTransactionPayload: SendTransactionPayload;
   connectWallet: () => Promise<void>;
   handleSendTransactionPayloadChange: (
     event: ChangeEvent<HTMLInputElement>,
