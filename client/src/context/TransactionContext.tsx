@@ -1,12 +1,18 @@
 import {
   ChangeEvent,
+  Dispatch,
   ReactNode,
+  SetStateAction,
   createContext,
   useContext,
   useEffect,
   useState,
 } from "react";
-import { ethereum, getContract } from "@project/blockchain";
+import {
+  ethereum,
+  ethersWeb3ProviderFactory,
+  getContract,
+} from "@project/blockchain";
 
 import { ethers } from "ethers";
 
@@ -64,7 +70,6 @@ export const TransactionContext = createContext(
 
 export function useTransaction() {
   const context = useContext(TransactionContext);
-
   if (context === undefined) {
     throw new Error("useTransaction must be used within a TransactionProvider");
   }
@@ -72,47 +77,41 @@ export function useTransaction() {
   return context;
 }
 
-export type TransactionProviderProps = {
-  children: ReactNode;
-};
-export const TransactionProvider = (props: TransactionProviderProps) => {
-  let [currentAccount, setCurrentAccount] = useState(undefined as any);
-  let [sendTransactionPayload, setSendTransactionPayload] = useState({
-    addressTo: "",
-    amount: "",
-    message: "",
-    keyword: "",
-  });
-  let [isLoading, setIsLoading] = useState(false);
-  let [transactionsCount, setTransactionsCount] = useState(
-    +(localStorage.getItem("transactionsCount") || 0)
-  );
-  let [accountBalance, setAccountBalance] = useState("0.000");
-
-  const handleSendTransactionPayloadChange = (
-    event: ChangeEvent<HTMLInputElement>,
-    inputName: string
-  ) =>
-    setSendTransactionPayload((prev: any) => ({
-      ...prev,
+// Provider
+export const createHandleSendTransactionPayloadChangeFn = (
+  setSendTransactionPayloadFn: Dispatch<SetStateAction<SendTransactionPayload>>
+) => {
+  return (event: ChangeEvent<HTMLInputElement>, inputName: string) => {
+    setSendTransactionPayloadFn((currentState: SendTransactionPayload) => ({
+      ...currentState,
       [inputName]: event.target.value,
     }));
+  };
+};
 
-  const getAccountBalance = async (account: string) => {
+const createGetAccountBalanceFn = (
+  setAccountBalanceFn: Dispatch<SetStateAction<string>>,
+  provider: ethers.providers.Web3Provider
+) => {
+  return async (account: string) => {
     let value: string;
     console.log("Get balance for account:", account);
     try {
-      const provider = new ethers.providers.Web3Provider(ethereum);
       const balance = await provider.getBalance(account);
       value = ethers.utils.formatEther(balance);
-      setAccountBalance(value);
+      setAccountBalanceFn(value);
       console.log("Account balance:", value);
     } catch (error) {
       console.error("Cannot get balance:", error);
     }
   };
+};
 
-  const isWalletConnected = async () => {
+export const createIsWalletConnectedFn = (
+  setCurrentAccountFn: Dispatch<SetStateAction<string>>,
+  getAccountBalanceFn: (account: string) => Promise<void>
+) => {
+  return async () => {
     try {
       if (!ethereum) throw new Error("MetaMask wallet is not installed");
 
@@ -125,10 +124,8 @@ export const TransactionProvider = (props: TransactionProviderProps) => {
         let account = accounts[idxAcc];
 
         console.log("Set main account:", account);
-        setCurrentAccount(account);
-        await getAccountBalance(account);
-
-        // getAllTransactions();
+        setCurrentAccountFn(account);
+        await getAccountBalanceFn(account);
       } else {
         console.warn("No accounts connected");
       }
@@ -137,8 +134,13 @@ export const TransactionProvider = (props: TransactionProviderProps) => {
       throw new Error("Access account in connected wallet failed");
     }
   };
+};
 
-  const connectWallet = async () => {
+export const createConnectWalletFn = (
+  setCurrentAccountFn: Dispatch<SetStateAction<string>>,
+  getAccountBalanceFn: (account: string) => Promise<void>
+) => {
+  return async () => {
     if (!ethereum) throw new Error("MetaMask wallet is not installed");
     try {
       console.log("Connecting MetaMask account(s)...");
@@ -152,8 +154,8 @@ export const TransactionProvider = (props: TransactionProviderProps) => {
         let account = accounts[idxAcc];
         console.log("Set main account:", account);
 
-        setCurrentAccount(account);
-        await getAccountBalance(account);
+        setCurrentAccountFn(account);
+        await getAccountBalanceFn(account);
       } else {
         console.warn("No accounts were connected, connect again");
       }
@@ -162,16 +164,26 @@ export const TransactionProvider = (props: TransactionProviderProps) => {
       throw new Error("Connect to wallet account operation failed");
     }
   };
+};
 
-  const sendTransaction = async (): Promise<boolean> => {
+export const createSendTransactionFn = (
+  currentAccount: string,
+  sendTransactionPayload: SendTransactionPayload,
+  setIsLoadingFn: Dispatch<SetStateAction<boolean>>,
+  getAccountBalanceFn: (account: string) => Promise<void>,
+  setTransactionsCountFn: Dispatch<SetStateAction<number>>,
+  getContractFn: () => ethers.Contract,
+  localStorage: Storage
+) => {
+  return async (): Promise<boolean> => {
     try {
       if (!ethereum) throw new Error("MetaMask wallet is not installed");
-      setIsLoading(true);
+      setIsLoadingFn(true);
 
       let { addressTo, amount, message, keyword } = sendTransactionPayload;
       const parsedAmount = ethers.utils.parseEther(amount)._hex;
 
-      const contract = getContract();
+      const contract = getContractFn();
       await ethereum.request({
         method: "eth_sendTransaction",
         contract,
@@ -193,25 +205,79 @@ export const TransactionProvider = (props: TransactionProviderProps) => {
       console.log("Loading - tx hash:", tx.hash);
 
       tx.wait();
-      setIsLoading(false);
+      setIsLoadingFn(false);
       console.log("Success - tx hash:", tx.hash);
 
       let transactionsCount = await contract.getTransactionsCount();
-      setTransactionsCount(transactionsCount.toNumber());
+      setTransactionsCountFn(transactionsCount.toNumber());
       localStorage.setItem(
         "transactionsCount",
         `${transactionsCount.toNumber()}`
       );
 
-      await getAccountBalance(currentAccount);
+      await getAccountBalanceFn(currentAccount);
     } catch (error) {
       console.error("send transaction:", error);
-      setIsLoading(false);
+      setIsLoadingFn(false);
       throw new Error("Send transaction operation failed");
     }
 
     return true;
   };
+};
+
+export type TransactionProviderProps = {
+  children: ReactNode;
+};
+export const TransactionProvider = (props: TransactionProviderProps) => {
+  let [currentAccount, setCurrentAccount] = useState(
+    TransactionContextPropsInitialValue.currentAccount
+  );
+  let [sendTransactionPayload, setSendTransactionPayload] =
+    useState<SendTransactionPayload>(
+      TransactionContextPropsInitialValue.sendTransactionPayload
+    );
+  let [isLoading, setIsLoading] = useState(
+    TransactionContextPropsInitialValue.isLoading
+  );
+  let [transactionsCount, setTransactionsCount] = useState(
+    +(
+      localStorage.getItem("transactionsCount") ||
+      TransactionContextPropsInitialValue.transactionsCount
+    )
+  );
+  let [accountBalance, setAccountBalance] = useState(
+    TransactionContextPropsInitialValue.accountBalance
+  );
+
+  const handleSendTransactionPayloadChange =
+    createHandleSendTransactionPayloadChangeFn(setSendTransactionPayload);
+
+  const provider = ethersWeb3ProviderFactory(ethereum);
+  const getAccountBalance = createGetAccountBalanceFn(
+    setAccountBalance,
+    provider
+  );
+
+  const isWalletConnected = createIsWalletConnectedFn(
+    setCurrentAccount,
+    getAccountBalance
+  );
+
+  const connectWallet = createConnectWalletFn(
+    setCurrentAccount,
+    getAccountBalance
+  );
+
+  const sendTransaction = createSendTransactionFn(
+    currentAccount,
+    sendTransactionPayload,
+    setIsLoading,
+    getAccountBalance,
+    setTransactionsCount,
+    getContract,
+    localStorage
+  );
 
   useEffect(() => {
     isWalletConnected();
