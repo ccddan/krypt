@@ -7,7 +7,7 @@ import FormEthTx, { FormEthTxProps } from "./FormEthTx";
 import {
   TransactionContext,
   TransactionContextPropsInitialValue,
-} from "./../../../Transactions/context/TransactionContext";
+} from "../../../../context/TransactionContext";
 
 let onChangeHandlerFn = jest.fn();
 let onSubmitHandlerFn = jest.fn();

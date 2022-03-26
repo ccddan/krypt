@@ -7,7 +7,7 @@ import Welcome, { createOnFormSubmitHandlerFn } from "./Welcome";
 import {
   TransactionContext,
   TransactionContextPropsInitialValue,
-} from "./../Transactions/context/TransactionContext";
+} from "../../context/TransactionContext";
 
 let connectWalletFn = jest.fn();
 let sendTransactionFn = jest.fn();

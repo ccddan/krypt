@@ -1,4 +1,4 @@
-import { useTransaction } from "./context/TransactionContext";
+import { useTransaction } from "../../context/TransactionContext";
 import TransactionCard from "./TransactionCard/TransactionCard";
 
 const data = [
