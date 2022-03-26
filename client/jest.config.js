@@ -13,7 +13,7 @@ module.exports = {
     "@project/config": "<rootDir>/src/config/index.ts",
     "@project/blockchain": "<rootDir>/src/blockchain/index.ts",
     "@project/blockchain/(.*)": "<rootDir>/src/blockchain/$1",
-    "@project/context": "<rootDir>/src/context/index.ts",
+    "@project/context": "<rootDir>/src/context/index.tsx",
     "@project/context/(.*)": "<rootDir>/src/context/$1",
   },
   // The bail config option can be used here to have Jest stop running tests after
