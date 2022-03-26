@@ -1,11 +1,35 @@
 import { MouseEvent } from "react";
 
-import { useTransaction } from "../Transactions";
+import { useTransaction, SendTransactionPayload } from "../Transactions";
 import { CryptoCard } from "./CryptoCard";
 import { FormEthTx, FormEthTxProps } from "./Forms";
 
 const commonStyles =
   "min-h-[70px] sm:px-0 px-2 sm:min-w-[120px] flex justify-center items-center border-[0.5px] border-gray-400 text-sm font-light text-white";
+
+export const createConnectWalletHandlerFn = (
+  connectWalletFn: () => Promise<void>
+) => {
+  return async (event: MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    event.stopPropagation();
+    await connectWalletFn();
+  };
+};
+
+export const createOnFormSubmitHandlerFn = (
+  sendTransactionFn: () => Promise<boolean>,
+  payload: SendTransactionPayload
+) => {
+  return (event: MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    event.stopPropagation();
+
+    let { addressTo, amount, message, keyword } = payload;
+    if (!addressTo || !amount || !message || !keyword) return;
+    sendTransactionFn();
+  };
+};
 
 export const Welcome = () => {
   const {
@@ -17,36 +41,11 @@ export const Welcome = () => {
     sendTransaction,
   } = useTransaction();
 
-  const connectWalletHandler = async (event: MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
-    event.stopPropagation();
-    console.debug("Connect Wallet Handler");
-    await connectWallet();
-  };
-  const handleSubmit = (event: MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
-    event.stopPropagation();
-
-    console.log("transaction payload:", sendTransactionPayload);
-    let { addressTo, amount, message, keyword } = sendTransactionPayload;
-    if (!addressTo || !amount || !message || !keyword) return;
-    sendTransaction();
-  };
-
-  /*
-  <FormInput
-    name="keyword"
-    placeholder="Keyword (Gif)"
-    type="text"
-    onChangeHandler={handleSendTransactionPayloadChange}
-  />
-  <FormInput
-    name="message"
-    placeholder="Message"
-    type="text"
-    onChangeHandler={handleSendTransactionPayloadChange}
-  />
-  */
+  const connectWalletHandler = createConnectWalletHandlerFn(connectWallet);
+  const handleSubmit = createOnFormSubmitHandlerFn(
+    sendTransaction,
+    sendTransactionPayload
+  );
 
   let formProps: FormEthTxProps = {
     inputs: [
