@@ -12,7 +12,7 @@ import {
 let onChangeHandlerFn = jest.fn();
 let onSubmitHandlerFn = jest.fn();
 
-describe("form inputs", () => {
+describe("dynamic form inputs are rendered", () => {
   let props: FormEthTxProps = {
     inputs: [],
     submit: {
@@ -90,8 +90,8 @@ describe("submit form button", () => {
   });
 });
 
-describe("loader is displayed", () => {
-  test("dynamic button text", () => {
+describe("when loader is displayed", () => {
+  test("submit button is not rendered", () => {
     let props: FormEthTxProps = {
       inputs: [],
       submit: {
