@@ -89,7 +89,7 @@ export const createHandleSendTransactionPayloadChangeFn = (
   };
 };
 
-const createGetAccountBalanceFn = (
+export const createGetAccountBalanceFn = (
   setAccountBalanceFn: Dispatch<SetStateAction<string>>,
   provider: ethers.providers.Web3Provider
 ) => {
