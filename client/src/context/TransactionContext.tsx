@@ -103,18 +103,19 @@ export const createGetAccountBalanceFn = (
       console.log("Account balance:", value);
     } catch (error) {
       console.error("Cannot get balance:", error);
+      throw new Error("Cannot get/set account balance");
     }
   };
 };
 
 export const createIsWalletConnectedFn = (
+  ethereum: any,
   setCurrentAccountFn: Dispatch<SetStateAction<string>>,
   getAccountBalanceFn: (account: string) => Promise<void>
 ) => {
   return async () => {
+    if (!ethereum) throw new Error("MetaMask wallet is not installed");
     try {
-      if (!ethereum) throw new Error("MetaMask wallet is not installed");
-
       console.log("Fetching MetaMask connected accounts...");
       const accounts = await ethereum.request({ method: "eth_accounts" });
       console.log("Connected accounts:", accounts);
@@ -126,17 +127,16 @@ export const createIsWalletConnectedFn = (
         console.log("Set main account:", account);
         setCurrentAccountFn(account);
         await getAccountBalanceFn(account);
-      } else {
-        console.warn("No accounts connected");
       }
     } catch (error) {
-      console.error("accounts in connected wallet:", error);
+      console.error("access to wallet account failed:", error);
       throw new Error("Access account in connected wallet failed");
     }
   };
 };
 
 export const createConnectWalletFn = (
+  ethereum: any,
   setCurrentAccountFn: Dispatch<SetStateAction<string>>,
   getAccountBalanceFn: (account: string) => Promise<void>
 ) => {
@@ -156,8 +156,6 @@ export const createConnectWalletFn = (
 
         setCurrentAccountFn(account);
         await getAccountBalanceFn(account);
-      } else {
-        console.warn("No accounts were connected, connect again");
       }
     } catch (error) {
       console.error("connect to wallet account:", error);
@@ -167,6 +165,7 @@ export const createConnectWalletFn = (
 };
 
 export const createSendTransactionFn = (
+  ethereum: any,
   currentAccount: string,
   sendTransactionPayload: SendTransactionPayload,
   setIsLoadingFn: Dispatch<SetStateAction<boolean>>,
@@ -176,8 +175,8 @@ export const createSendTransactionFn = (
   localStorage: Storage
 ) => {
   return async (): Promise<boolean> => {
+    if (!ethereum) throw new Error("MetaMask wallet is not installed");
     try {
-      if (!ethereum) throw new Error("MetaMask wallet is not installed");
       setIsLoadingFn(true);
 
       let { addressTo, amount, message, keyword } = sendTransactionPayload;
@@ -260,16 +259,19 @@ export const TransactionProvider = (props: TransactionProviderProps) => {
   );
 
   const isWalletConnected = createIsWalletConnectedFn(
+    ethereum,
     setCurrentAccount,
     getAccountBalance
   );
 
   const connectWallet = createConnectWalletFn(
+    ethereum,
     setCurrentAccount,
     getAccountBalance
   );
 
   const sendTransaction = createSendTransactionFn(
+    ethereum,
     currentAccount,
     sendTransactionPayload,
     setIsLoading,
