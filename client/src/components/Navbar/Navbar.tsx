@@ -1,10 +1,8 @@
-import { useState } from "react";
-
 import { AiOutlineClose } from "react-icons/ai";
 import { HiMenuAlt4 } from "react-icons/hi";
-
-import logo from "../../../images/logo.png";
 import NavbarItem from "./NavbarItem";
+import logo from "../../../images/logo.png";
+import { useState } from "react";
 
 export const NAV_MENU_ITEMS = Object.freeze([
   "Market",

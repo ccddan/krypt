@@ -1,6 +1,5 @@
-import { ReactElement } from "react";
-
 import { IconType } from "react-icons";
+import { ReactElement } from "react";
 
 export type ServiceCardProps = {
   title: string;

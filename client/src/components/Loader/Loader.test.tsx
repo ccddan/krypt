@@ -1,8 +1,7 @@
 import "@testing-library/jest-dom";
 
-import { render } from "@project/tests/utils";
-
 import Loader from "./Loader";
+import { render } from "@project/tests/utils";
 
 describe("renders content", () => {
   let _container: HTMLElement;

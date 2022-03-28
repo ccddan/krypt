@@ -27,6 +27,18 @@
       "@project/config/*": [
         "./src/config/*"
       ],
+      "@project/blockchain": [
+        "./src/blockchain/index.ts"
+      ],
+      "@project/blockchain/*": [
+        "./src/blockchain/*"
+      ],
+      "@project/context": [
+        "./src/context/index.tsx"
+      ],
+      "@project/context/*": [
+        "./src/context/*"
+      ],
       "@project/tests/*": [
         "./tests/*"
       ]

@@ -1,13 +1,9 @@
 import "@testing-library/jest-dom";
 
-import { render } from "@project/tests/utils";
-import {
-  getByRole,
-  getByTestId,
-  queryByTestId,
-} from "@testing-library/dom";
-
 import Navbar, { NAV_MENU_ITEMS } from "./Navbar";
+import { getByRole, getByTestId, queryByTestId } from "@testing-library/dom";
+
+import { render } from "@project/tests/utils";
 
 describe("renders content", () => {
   let _container: HTMLElement;

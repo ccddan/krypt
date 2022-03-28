@@ -1,7 +1,7 @@
 export interface NavbarItemProps {
   title: string;
   classProps: string;
-};
+}
 
 export const NavbarItem = (props: NavbarItemProps) => {
   return (

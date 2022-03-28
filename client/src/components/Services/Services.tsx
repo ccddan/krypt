@@ -1,7 +1,6 @@
 import { BiSearchAlt } from "react-icons/bi";
 import { BsShieldFillCheck } from "react-icons/bs";
 import { RiHeart2Fill } from "react-icons/ri";
-
 import ServiceCard from "./ServiceCard";
 
 export const Services = () => {

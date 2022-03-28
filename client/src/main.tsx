@@ -1,10 +1,9 @@
 import "./index.css";
 
+import App from "./App";
 import React from "react";
 import ReactDOM from "react-dom";
-
-import App from "./App";
-import { TransactionProvider } from "./components/Transactions";
+import { TransactionProvider } from "@project/context";
 
 ReactDOM.render(
   <TransactionProvider>

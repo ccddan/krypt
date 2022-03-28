@@ -1,9 +1,8 @@
 import "@testing-library/jest-dom";
 
-import { render } from "@project/tests/utils";
-import { getByText } from "@testing-library/dom";
-
 import Footer from "./Footer";
+import { getByText } from "@testing-library/dom";
+import { render } from "@project/tests/utils";
 
 describe("renders content", () => {
   let _container: HTMLElement;
